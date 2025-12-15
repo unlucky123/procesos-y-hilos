@@ -1,3 +1,0 @@
-Modifica la temporización del proceso hijo, de forma que éste acabe su
-ejecución mucho antes que su proceso padre; hazlo utilizando el método
-correspondiente de la clase CFil
