@@ -1,0 +1,5 @@
+Aunque no es una norma obligatoria, se aconseja que el proceso padre
+siempre termine después de cualquiera de sus procesos hijos; investiga cómo
+puedes conseguir que esto ocurra, y modifica la clase CFilPrincipal creada en el
+punto 1.2 para de conseguirlo (nota: investiga qué métodos proporciona la clase
+Thread)
