@@ -1,56 +1,31 @@
-package cFil;
+package cFIL;
 
-//alternativa: extends Thread
-public class cFil implements Runnable {
+public class cFilPrincipal {
 
-  String aNomFil;
+  public static void main (String [] pArguments) {
 
-  int aTemporitzacio;
+    System.out.println("fil principal iniciat");
+    System.out.println("fil secundari iniciat");
 
-  public cFil (String pNomFil) {
+    cFil vObjecteFil = new cFil("#1");
 
-    aTemporitzacio = 500;
+    // el fill va molt lent
+    vObjecteFil.sTemporitzacio(2000);
 
-    aNomFil = pNomFil;
+    Thread vFil = new Thread(vObjecteFil);
+    vFil.start();
 
-  }
-
-  public String gNomFil () {
-
-    return aNomFil;
-
-  }
-
-  public void sTemporitzacio (int pTemporitzacio) {
-
-    aTemporitzacio = pTemporitzacio;
-
-  }
-
-  public void run () {
-
-    System . out . println ("Iniciant execució procés " + aNomFil);
+    System.out.println("iniciant execucio proces principal");
 
     try {
-
-      for (int vComptador = 0; vComptador < 10; vComptador ++) {
-
-        Thread . sleep (aTemporitzacio);
-
-        System . out . println ("Despertant aturada " + vComptador + " procès " + aNomFil);
-
+      for (int vComptador = 0; vComptador < 10; vComptador++) {
+        Thread.sleep(500);
+        System.out.println("despertant aturada " + vComptador + " proces principal");
       }
-
+    } catch (InterruptedException pExcepcio) {
+      System.out.println("interrompent execucio proces principal");
     }
 
-    catch (InterruptedException pExcepcio) {
-
-      System . out . println ("Interrompent execució procès " + aNomFil);
-
-    }
-
-    System . out . println ("Acabant execució procès " + aNomFil);
-
+    System.out.println("acabant execucio proces principal");
   }
-
 }
