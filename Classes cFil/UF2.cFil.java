@@ -1,56 +1,62 @@
-package cFil;
+package cFIL;
 
-//alternativa: extends Thread
-public class cFil implements Runnable {
+import java.util.Scanner;
 
-  String aNomFil;
+public class cFilPrincipal {
 
-  int aTemporitzacio;
+  private static final int max_fills = 20;
 
-  public cFil (String pNomFil) {
+  public static void main (String [] pArguments) {
 
-    aTemporitzacio = 500;
+    Scanner sc = new Scanner(System.in);
 
-    aNomFil = pNomFil;
+    System.out.println("fil principal iniciat");
 
-  }
+    int n;
 
-  public String gNomFil () {
+    if (pArguments.length > 0) {
+      n = Integer.parseInt(pArguments[0]);
+    } else {
+      System.out.print("quants processos fills vols crear (1-" + max_fills + "): ");
+      n = sc.nextInt();
+    }
 
-    return aNomFil;
+    if (n < 1 || n > max_fills) {
+      System.out.println("nombre invalid");
+      return;
+    }
 
-  }
+    Thread[] fils = new Thread[n];
 
-  public void sTemporitzacio (int pTemporitzacio) {
+    int base = 200;
+    int salt = 200;
 
-    aTemporitzacio = pTemporitzacio;
+    for (int i = 0; i < n; i++) {
 
-  }
+      cFil obj = new cFil("#" + (i + 1));
+      obj.sTemporitzacio(base + i * salt);
 
-  public void run () {
+      fils[i] = new Thread(obj);
+      fils[i].start();
 
-    System . out . println ("Iniciant execució procés " + aNomFil);
+      System.out.println("iniciant fil #" + (i + 1));
+    }
 
     try {
-
-      for (int vComptador = 0; vComptador < 10; vComptador ++) {
-
-        Thread . sleep (aTemporitzacio);
-
-        System . out . println ("Despertant aturada " + vComptador + " procès " + aNomFil);
-
+      for (int i = 0; i < 10; i++) {
+        Thread.sleep(500);
+        System.out.println("proces principal treballant " + i);
       }
 
+      // esperar tots els fills
+      for (int i = 0; i < n; i++) {
+        fils[i].join();
+      }
+
+    } catch (InterruptedException e) {
+      System.out.println("interrompent execucio proces principal");
     }
 
-    catch (InterruptedException pExcepcio) {
-
-      System . out . println ("Interrompent execució procès " + aNomFil);
-
-    }
-
-    System . out . println ("Acabant execució procès " + aNomFil);
-
+    System.out.println("acabant execucio proces principal");
   }
-
 }
